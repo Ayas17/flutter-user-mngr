@@ -42,8 +42,8 @@ class _UserDetailsState extends State<UserDetails> {
         future: _users,
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            List<User>? data = snapshot.data;
-            return buildDataTable(data!);
+            List<User> data = snapshot.data!;
+            return buildDataTable(data);
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -62,18 +62,23 @@ class _UserDetailsState extends State<UserDetails> {
           children: [
             SizedBox(
               width: double.infinity,
-              child: getDataTable(data),
+              child: buildSingleChildScrollView(data),
             ),
           ],
         ));
   }
 
-  getDataTable(List<User>? data) {
+  Widget buildSingleChildScrollView(List<User> data) => SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: getDataTable(data)
+      );
+
+  getDataTable(List<User> data) {
     final columns = ['Display Name', 'User Role', 'Login Name', 'Email', 'Action'];
     return DataTable(
       columnSpacing: defaultPadding,
       columns: getColumns(columns),
-      rows: getDataRows(data!),
+      rows: getDataRows(data),
     );
   }
 
@@ -87,7 +92,8 @@ class _UserDetailsState extends State<UserDetails> {
     if(data.isNotEmpty){
       return data
           .map<DataRow>(
-            (user) => DataRow(cells: [
+            (user) => DataRow(
+                cells: [
           DataCell(Text(user.displayName!)),
           DataCell(Text(user.userRole!)),
           DataCell(Text(user.loginName!)),
@@ -165,6 +171,9 @@ class _UserDetailsState extends State<UserDetails> {
         );
       });
     },
+    style: ElevatedButton.styleFrom(
+      primary: Colors.red,
+    ),
     icon: const Icon(Icons.delete),
     label: const Text(""),
   );

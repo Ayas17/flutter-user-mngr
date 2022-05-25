@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:user_management/models/model_user.dart';
 
 Future<User> addUser(var requestData) async {
-  const String url = 'http://localhost:3050/service/users';
+  const String url = 'http://172.25.0.1:3050/service/users';
   Map<String, Object> responseData;
   try {
     print('Calling addUser()');
@@ -47,7 +47,7 @@ Future<User> deleteUser(var requestData) async {
   try {
     print('Calling deleteUser()');
     userName = requestData["username"];
-    url = 'http://localhost:3050/service/users/$userName';
+    url = 'http://172.25.0.1:3050/service/users/$userName';
     var params = {
       "username": requestData["username"],
     };
@@ -88,7 +88,7 @@ Future<User> editUser(var requestData) async {
   try {
     print('Calling editUser()');
     userName = requestData["username"];
-    url = 'http://localhost:3050/service/users/$userName';
+    url = 'http://172.25.0.1:3050/service/users/$userName';
     var params = {
       "username": requestData["username"],
     };
@@ -124,7 +124,7 @@ Future<User> editUser(var requestData) async {
 }
 Future<List<User>> fetchUsers() async {
   List<User> users = [];
-  const String url = 'http://localhost:3050/service/users/list';
+  const String url = 'http://172.25.0.1:3050/service/users/list';
   try {
     print('Calling fetchUsers()');
     final response = await http.get(Uri.parse(url));
@@ -144,7 +144,7 @@ Future<List<User>> fetchUsers() async {
 
 Future<List<User>> fetchUser(String username) async {
   List<User> users = [];
-  String url = 'http://localhost:3050/service/users/$username';
+  String url = 'http://172.25.0.1:3050/service/users/$username';
   try {
     print('Calling fetchUser()');
     final response = await http.get(Uri.parse(url));
